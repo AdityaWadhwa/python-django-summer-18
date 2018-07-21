@@ -11,16 +11,30 @@ def index(request):
     return render(request, 'main/index.html', context)
 
 def restaurants(request):
-    query_set = models.Restaurant.objects.all()
-
-    query_set = query_set.annotate(average_rating = Avg('review__rating')).order_by('-average_rating')
-
     print(request.GET)
+    
+    try:
+        r = request.GET['rating']
+        s = request.GET['sorting']
+        if(r==""):
+            r = 0
+    except:
+        r = 0
+        s = "H2L"
+
+    query_set = models.Restaurant.objects.all()
+    query_set = query_set.annotate(average_rating = Avg('review__rating')).filter(average_rating__gte = r)
+
+    if(s=="L2H"):
+        query_set=query_set.order_by('average_rating')
+    else:
+        query_set=query_set.order_by('-average_rating')
 
     context = {
         "query_set": query_set,
     }
     return render(request, 'main/restaurants.html', context)
+
 
 def add_restraunt(request):
     if request.method == "GET":

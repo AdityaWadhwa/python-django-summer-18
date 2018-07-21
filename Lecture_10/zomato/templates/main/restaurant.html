@@ -14,8 +14,8 @@
     <ul>
 
         {% for review in restaurant.review_set.all %}
-
-            <li> <a target="_blank" href="{% url 'review' id=review.pk %}"> {{ review.title }} - {{ review.get_stars }} </a> </li>
+            
+            <li> <a href="#" onClick="window.open('{% url 'review' id=review.pk %}','popup',width=600,height=400); return false;" > {{ review.title }} - {{ review.get_stars }} </a> </li>
 
         {% endfor %}
 

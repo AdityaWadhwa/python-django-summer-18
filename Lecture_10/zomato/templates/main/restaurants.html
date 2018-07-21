@@ -4,6 +4,21 @@
 
     <h1> Restaurants </h1>
 
+    <form action="" method="GET">
+        
+        {% csrf_token %}
+        Show restaurants with a minimum rating of :
+        <input type="number" name="rating" min="1" max="5">
+
+        <select name="sorting">
+            <option value="H2L">High to Low</option>
+            <option value="L2H">Low to High</option>
+        </select>
+
+        <button type="submit">Submit</button>
+
+    </form>
+
     <ul>
 
     {% for restaurant in query_set %}
